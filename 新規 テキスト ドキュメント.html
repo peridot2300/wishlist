@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ログイン付きやりたいことリスト</title>
+  <style>
+    body {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      background: #fff0f5;
+      text-align: center;
+      padding: 20px;
+    }
+    .hidden { display: none; }
+    .todo-item {
+      background: #fff;
+      padding: 10px;
+      margin: 10px auto;
+      border-radius: 10px;
+      max-width: 400px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      margin: 5px;
+    }
+    button {
+      background-color: #ffb6c1;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ログイン画面 -->
+  <div id="loginPage">
+    <h1>💫 ログイン 💫</h1>
+    <input type="text" id="userId" placeholder="ID"><br>
+    <input type="password" id="password" placeholder="パスワード"><br>
+    <button onclick="login()">ログイン</button>
+    <p id="loginError" style="color: red;"></p>
+  </div>
+
+  <!-- メイン画面 -->
+  <div id="mainPage" class="hidden">
+    <h1>💖 やりたいことリスト 💖</h1>
+    <input type="text" id="newTodo" placeholder="やりたいことを書く…">
+    <button onclick="addTodo()">追加</button>
+    <div id="todoList"></div>
+  </div>
+
+  <script>
+    const validId = "kuwachan";           // ←ここでIDを設定
+    const validPassword = "kuwakuwa"; // ←ここでパスワードを設定
+
+    function login() {
+      const inputId = document.getElementById("userId").value;
+      const inputPass = document.getElementById("password").value;
+      const errorMsg = document.getElementById("loginError");
+
+      if (inputId === validId && inputPass === validPassword) {
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("mainPage").classList.remove("hidden");
+      } else {
+        errorMsg.textContent = "IDまたはパスワードが違います。";
+      }
+    }
+
+    function addTodo() {
+      const text = document.getElementById('newTodo').value;
+      if (!text) return;
+      const item = document.createElement('div');
+      item.className = 'todo-item';
+      item.innerHTML = `${text} <button onclick="this.parentNode.remove()">✖</button>`;
+      document.getElementById('todoList').appendChild(item);
+      document.getElementById('newTodo').value = '';
+    }
+  </script>
+
+</body>
+</html>
